@@ -60,4 +60,44 @@ class ReunionTest < Minitest::Test
     assert_equal 103.7, reunion.total_cost
   end
 
+  def test_it_can_evaluate_total_reunion_cost_for_two_activities
+    reunion = Reunion.new("Hawaii")
+    activity = Activity.new("Hiking")
+    activity.add_participant({"Nikhil" => 30})
+    activity.add_participant({"Ian" => 30})
+    reunion.add_activity(activity)
+
+    activity = Activity.new("Swimming")
+    activity.add_participant({"Nikhil" => 40.2})
+    activity.add_participant({"Ian" => 45})
+    activity.add_participant({"Sergio" => 75.3})
+    reunion.add_activity(activity)
+
+    assert_equal 220.5, reunion.total_cost
+  end
+
+  def test_it_can_evaluate_participant_expense_for_one_activity
+    reunion = Reunion.new("Hawaii")
+    activity_1 = Activity.new("Hiking")
+    activity_1.add_participant({"Nikhil" => 30})
+    activity_1.add_participant({"Ian" => 30})
+    reunion.add_activity(activity_1)
+
+    activity_2 = Activity.new("Swimming")
+    activity_2.add_participant({"Nikhil" => 40})
+    activity_2.add_participant({"Ian" => 45})
+    activity_2.add_participant({"Sergio" => 75})
+    reunion.add_activity(activity_2)
+
+    result_1 = reunion.total_expenses_participant_one_activity("Nikhil",
+    activity_1)
+
+    assert_equal 30, result_1
+
+    result_2 = reunion.total_expenses_participant_one_activity("Nikhil",
+    activity_2)
+
+    assert_equal 40, result_2
+  end
+
 end
