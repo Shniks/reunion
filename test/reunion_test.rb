@@ -100,4 +100,58 @@ class ReunionTest < Minitest::Test
     assert_equal 40, result_2
   end
 
+  def test_it_can_evaluate_total_expenses_for_a_participant_for_all_activities
+    reunion = Reunion.new("Hawaii")
+    activity = Activity.new("Hiking")
+    activity.add_participant({"Nikhil" => 30})
+    activity.add_participant({"Ian" => 30})
+    reunion.add_activity(activity)
+
+    activity = Activity.new("Swimming")
+    activity.add_participant({"Nikhil" => 40})
+    activity.add_participant({"Ian" => 45})
+    activity.add_participant({"Sergio" => 75})
+    reunion.add_activity(activity)
+
+    result = reunion.total_expenses_for_participant_for_all_activities("Nikhil")
+
+    assert_equal 70, result
+  end
+
+  def test_it_can_split_expenses
+    reunion = Reunion.new("Hawaii")
+    activity = Activity.new("Hiking")
+    activity.add_participant({"Nikhil" => 30})
+    activity.add_participant({"Adrian" => 30})
+    activity.add_participant({"Sergio" => 60})
+    reunion.add_activity(activity)
+
+    activity = Activity.new("Swimming")
+    activity.add_participant({"Nikhil" => 40})
+    activity.add_participant({"Adrian" => 45})
+    activity.add_participant({"Sergio" => 75})
+    reunion.add_activity(activity)
+
+    assert_equal 93.3, reunion.split_cost
+  end
+
+  def test_it_can_compute_amount_owed
+    skip
+    reunion = Reunion.new("Hawaii")
+    activity = Activity.new("Hiking")
+    activity.add_participant({"Nikhil" => 30})
+    activity.add_participant({"Adrian" => 30})
+    activity.add_participant({"Sergio" => 60})
+    reunion.add_activity(activity)
+
+    activity = Activity.new("Swimming")
+    activity.add_participant({"Nikhil" => 40})
+    activity.add_participant({"Adrian" => 45})
+    activity.add_participant({"Sergio" => 75})
+    reunion.add_activity(activity)
+
+    assert_equal [{"Nikhil" => 23.3}, {"Adrian" => 18.3}, {"Sergio" => -41.7}],
+    reunion.amount_owed_each_participant
+  end
+
 end

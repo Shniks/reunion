@@ -20,7 +20,7 @@ class Reunion
 
   def total_expenses_for_participant_for_all_activities(name)
     activities.reduce(0) do |total, activity|
-      total + total_expenses_participant_one_activity(name, activity, total)
+      total + total_expenses_participant_one_activity(name, activity)
     end
   end
 
@@ -30,6 +30,11 @@ class Reunion
     end
     @result
   end
+
+  def split_cost
+    (total_cost.to_f / activities.first.participants.length).round(1)
+  end
+
 
 
 end
