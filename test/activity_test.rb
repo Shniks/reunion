@@ -47,4 +47,40 @@ class ActivityTest < Minitest::Test
     assert_equal 117, activity.total_cost
   end
 
+  def test_it_can_split_the_cost_of_an_activity
+    activity = Activity.new("hiking")
+    activity.add_participant({"Nikhil" => 33})
+    activity.add_participant({"Ian" => 20})
+
+    assert_equal 26.5, activity.split_cost
+  end
+
+  def test_it_can_split_the_cost_of_another_activity
+    activity = Activity.new("hiking")
+    activity.add_participant({"Nikhil" => 30})
+    activity.add_participant({"Ian" => 30})
+    activity.add_participant({"Mike" => 40})
+
+    assert_equal 33.3, activity.split_cost
+  end
+
+  def test_it_can_find_amount_owed_by_each_person
+    activity = Activity.new("hiking")
+    activity.add_participant({"Nikhil" => 30})
+    activity.add_participant({"Ian" => 43})
+
+    assert_equal [{"Nikhil" => 6.5}, {"Ian" => -6.5}], activity.amount_owed
+  end
+
+  def test_it_can_find_amount_owed_by_four_people
+    activity = Activity.new("hiking")
+    activity.add_participant({"Nikhil" => 30})
+    activity.add_participant({"Ian" => 43})
+    activity.add_participant({"Mike" => 25})
+    activity.add_participant({"Sergio" => 66})
+
+    assert_equal [{"Nikhil"=>11.0}, {"Ian"=>-2.0}, {"Mike"=>16.0},
+    {"Sergio"=>-25.0}], activity.amount_owed
+  end
+
 end
