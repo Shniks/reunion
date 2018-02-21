@@ -38,4 +38,15 @@ class ReunionTest < Minitest::Test
     assert_instance_of Activity, reunion.activities.first
   end
 
+  def test_it_can_evaluate_total_reunion_cost
+    reunion = Reunion.new("Hawaii")
+    activity = Activity.new("Hiking")
+    activity.add_participant({"Nikhil" => 30})
+    activity.add_participant({"Adrian" => 30})
+    activity.add_participant({"Mike" => 40})
+    reunion.add_activity(activity)
+
+    assert_equal 100, reunion.total_cost
+  end
+
 end

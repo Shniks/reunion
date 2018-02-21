@@ -10,6 +10,12 @@ class Reunion
 
   def add_activity(activity)
     activities << activity
-  end 
+  end
+
+  def total_cost
+    activities.reduce(0) do |total, activity|
+      total + activity.total_cost
+    end
+  end
 
 end
