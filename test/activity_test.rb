@@ -30,13 +30,21 @@ class ActivityTest < Minitest::Test
     assert_equal [{"Nikhil" => 32}], activity.participants
   end
 
-  # def test_if_it_can_add_two_participants
-  #   activity = Activity.new("hiking")
-  #   activity.add_participant({"Nikhil" => 32})
-  #   activity.add_participant({"Adrian" => 20})
-  #
-  #   assert_equal [{"Nikhil" => 32}, {"Adrian" => 20}], activity.participants
-  # end
+  def test_if_it_can_add_two_participants
+    activity = Activity.new("hiking")
+    activity.add_participant({"Nikhil" => 32})
+    activity.add_participant({"Ian" => 20})
 
+    assert_equal [{"Nikhil" => 32}, {"Ian" => 20}], activity.participants
+  end
+
+  def test_if_it_can_evaluate_total_cost_of_an_activity
+    activity = Activity.new("hiking")
+    activity.add_participant({"Nikhil" => 32})
+    activity.add_participant({"Ian" => 20})
+    activity.add_participant({"Mike" => 65})
+
+    assert_equal 117, activity.total_cost
+  end
 
 end
